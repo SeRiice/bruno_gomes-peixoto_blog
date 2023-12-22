@@ -1,4 +1,4 @@
-import { string, ref } from "yup"
+import { string, ref, object, boolean } from "yup"
 
 export const firstNameValidator = string().min(2)
 
@@ -18,3 +18,10 @@ export const confirmPasswordValidator = string().oneOf(
   [ref("password"), null],
   "Passwords must match",
 )
+
+export const isDevModeValidator = boolean().default(false)
+
+export const dbValidator = object({
+  client: string().oneOf(["pg"]).required(),
+  connection: string().required(),
+})
