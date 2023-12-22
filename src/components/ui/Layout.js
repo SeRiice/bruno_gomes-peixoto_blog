@@ -9,7 +9,7 @@ const Layout = (props) => {
   return (
     <div
       className={clsx(
-        "flex flex-col w-full min-h-screen items-center bg-neutral-50 font-poppins text-sm",
+        "flex flex-col w-full min-h-screen items-center bg-neutral-50 font-poppins text-sm text-black",
         className,
       )}
       {...otherProps}
