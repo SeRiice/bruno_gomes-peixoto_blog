@@ -14,7 +14,7 @@ const Layout = (props) => {
       )}
       {...otherProps}
     >
-      <div className="w-full shadow">
+      <div className="w-full shadow sticky top-0 bg-neutral-50 ">
         <div className="flex mx-auto p-3 justify-between items-center max-w-3xl">
           <Link href={"/"} variant="logo">
             bloggy
