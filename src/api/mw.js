@@ -9,6 +9,8 @@ const mw = (methodByHandlers) => async (req, res) => {
     res
       .status(HTTP_ERRORS.METHOD_NOT_ALLOWED)
       .send({ error: "Method not allowed." })
+
+    return
   }
 
   let currentIndex = 0

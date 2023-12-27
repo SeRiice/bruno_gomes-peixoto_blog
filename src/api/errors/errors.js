@@ -12,3 +12,15 @@ export class HttpMethodError extends HttpPublicError {
     super(message)
   }
 }
+
+export class HttpArgumentsError extends HttpPublicError {
+  statusCode = HTTP_ERRORS.UNPROCESSABLE_ENTITY
+
+  constructor(errors) {
+    super(
+      errors
+        ? `Invalid arguments\n\t- ${errors.join("\n\t- ")}`.trim()
+        : "Invalid arguments",
+    )
+  }
+}
