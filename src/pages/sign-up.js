@@ -8,6 +8,9 @@ import {
   lastNameValidator,
   passwordValidator,
 } from "@/utils/validators"
+import { useMutation } from "@tanstack/react-query"
+import { createResource } from "@/web/services/api"
+import Alert from "@/components/ui/Alert"
 
 const initialValues = {
   firstName: "",
@@ -26,16 +29,23 @@ const validationSchema = object({
     .label("Confirm password"),
 })
 const SignUp = () => {
-  const handleSubmit = () => null
+  const { mutateAsync, isSuccess, isPending } = useMutation({
+    mutationFn: (values) => createResource("users", values),
+  })
+  const handleSubmit = async (values, { resetForm }) => {
+    await mutateAsync(values)
+    resetForm()
+  }
 
   return (
-    <div className="flex w-full items-center justify-center">
+    <div className="flex flex-col gap-8 w-full items-center justify-center">
+      {isSuccess && <Alert>Inscription validé !</Alert>}
       <SignForm
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
         formTitle="Complétez ce formulaire"
-        buttonText="S'INSCRIRE"
+        buttonText={isPending ? "ENVOI DES DONNÉES..." : "S'INSCRIRE"}
         linkInfo={{
           text: "Déjà un compte ?",
           href: "/sign-in",
