@@ -1,4 +1,4 @@
-import { string, ref, object, boolean } from "yup"
+import { string, ref, object, boolean, number } from "yup"
 
 export const firstNameValidator = string().min(2)
 
@@ -25,3 +25,7 @@ export const dbValidator = object({
   client: string().oneOf(["pg"]).required(),
   connection: string().required(),
 })
+
+export const passwordIterationsValidator = number().min(250000)
+
+export const passwordKeylenValidator = number().min(128)

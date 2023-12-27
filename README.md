@@ -28,6 +28,8 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 
 ```
 DB__CONNECTION=
+SECURITY__PASSWORD__ITERATIONS=
+SECURITY__PASSWORD__KEYLEN=
 ```
 
 ## Learn More

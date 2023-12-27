@@ -1,4 +1,9 @@
-import { dbValidator, isDevModeValidator } from "@/utils/validators"
+import {
+  dbValidator,
+  isDevModeValidator,
+  passwordIterationsValidator,
+  passwordKeylenValidator,
+} from "@/utils/validators"
 import { ValidationError, object } from "yup"
 import knexfile from "../../knexfile.mjs"
 import chalk from "chalk"
@@ -8,6 +13,12 @@ let config = null
 const validationSchema = object({
   isDevMode: isDevModeValidator,
   db: dbValidator.noUnknown(),
+  security: object({
+    password: object({
+      iterations: passwordIterationsValidator.required(),
+      keylen: passwordKeylenValidator.required(),
+    }),
+  }),
 })
 
 try {
@@ -15,6 +26,15 @@ try {
     {
       isDevMode: process.env.NODE_ENV === "development",
       db: knexfile,
+      security: {
+        password: {
+          iterations: Number.parseInt(
+            process.env.SECURITY__PASSWORD__ITERATIONS,
+            10,
+          ),
+          keylen: Number.parseInt(process.env.SECURITY__PASSWORD__KEYLEN, 10),
+        },
+      },
     },
     { abortEarly: false },
   )
