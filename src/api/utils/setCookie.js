@@ -5,7 +5,7 @@ import ms from "ms"
 
 const setCookie = (cookieName, cookieValue, options = {}) =>
   serialize(cookieName, cookieValue, {
-    maxAge: Date.now() + ms(config.security.jwt.expiresIn),
+    maxAge: ms(config.security.jwt.expiresIn) / 1000,
     path: "/",
     sameSite: "strict",
     httpOnly: true,
