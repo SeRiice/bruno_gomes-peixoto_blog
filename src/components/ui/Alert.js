@@ -33,14 +33,14 @@ const Alert = (props) => {
   return (
     <div
       className={clsx(
-        "flex items-center w-fit gap-2 p-2 rounded-lg font-medium shadow-md shadow-neutral-200",
+        "flex items-center gap-2 p-2 rounded-lg font-medium shadow-md shadow-neutral-200",
         variants[variant].style,
         className,
       )}
       {...otherProps}
     >
       <Icon className="w-6 h-6" />
-      <p>{children}</p>
+      <span>{children}</span>
     </div>
   )
 }
