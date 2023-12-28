@@ -1,6 +1,8 @@
 import {
   dbValidator,
   isDevModeValidator,
+  jwtExpiresInValidator,
+  jwtSecretValidator,
   passwordIterationsValidator,
   passwordKeylenValidator,
 } from "@/utils/validators"
@@ -17,8 +19,12 @@ const validationSchema = object({
     password: object({
       iterations: passwordIterationsValidator.required(),
       keylen: passwordKeylenValidator.required(),
-    }),
-  }),
+    }).noUnknown(),
+    jwt: object({
+      secret: jwtSecretValidator.required(),
+      expiresIn: jwtExpiresInValidator.required(),
+    }).noUnknown(),
+  }).noUnknown(),
 })
 
 try {
@@ -33,6 +39,10 @@ try {
             10,
           ),
           keylen: Number.parseInt(process.env.SECURITY__PASSWORD__KEYLEN, 10),
+        },
+        jwt: {
+          secret: process.env.SECURITY__JWT__SECRET,
+          expiresIn: process.env.SECURITY__JWT__EXPIRES_IN,
         },
       },
     },

@@ -20,7 +20,23 @@ export class HttpArgumentsError extends HttpPublicError {
     super(
       errors
         ? `Invalid arguments\n\t- ${errors.join("\n\t- ")}`.trim()
-        : "Invalid arguments",
+        : "Invalid arguments.",
     )
+  }
+}
+
+export class HttpAuthentificationError extends HttpPublicError {
+  statusCode = HTTP_ERRORS.UNAUTHORIZED
+
+  constructor(message = "Invalid credentials.") {
+    super(message)
+  }
+}
+
+export class HttpLockedError extends HttpPublicError {
+  statusCode = HTTP_ERRORS.LOCKED
+
+  constructor(message = "The resource you are trying to access is disabled.") {
+    super(message)
   }
 }

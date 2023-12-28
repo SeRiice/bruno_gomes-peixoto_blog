@@ -29,3 +29,18 @@ export const dbValidator = object({
 export const passwordIterationsValidator = number().min(250000)
 
 export const passwordKeylenValidator = number().min(128)
+
+export const jwtSecretValidator = string().min(20)
+
+export const jwtExpiresInValidator = string().oneOf([
+  "1 day",
+  "2 days",
+  "3 days",
+  "1 week",
+  "2 weeks",
+  "1 month",
+])
+
+export const sessionKeyValidator = string()
+
+export const sessionSecureValidator = boolean()

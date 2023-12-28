@@ -30,6 +30,9 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 DB__CONNECTION=
 SECURITY__PASSWORD__ITERATIONS=
 SECURITY__PASSWORD__KEYLEN=
+SECURITY__JWT__SECRET=
+SECURITY__JWT__EXPIRES_IN=
+NEXT_PUBLIC_SECURITY__SESSION__KEY=
 ```
 
 ## Learn More
