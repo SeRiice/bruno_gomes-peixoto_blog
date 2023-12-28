@@ -1,5 +1,5 @@
 import { HTTP_ERRORS } from "@/api/errors/constants"
-import Alert from "@/components/ui/Alert"
+import Alert from "@/components/ui/alert/Alert"
 
 const statusCodeMessages = {
   [HTTP_ERRORS.UNAUTHORIZED]: "Identifiants incorrects",

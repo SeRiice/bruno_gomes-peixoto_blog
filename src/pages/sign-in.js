@@ -1,11 +1,11 @@
-import FieldForm from "@/components/ui/FieldForm"
-import SignForm from "@/components/ui/SignForm"
+import FieldForm from "@/components/ui/form/FieldForm"
+import SignForm from "@/components/ui/form/SignForm"
 import { object, string } from "yup"
 import { emailValidator } from "@/utils/validators"
 import { useMutation } from "@tanstack/react-query"
 import { createResource } from "@/web/services/api"
 import { useSession } from "@/components/SessionContext"
-import ErrorAlert from "@/components/ui/ErrorAlert"
+import ErrorAlert from "@/components/ui/alert/ErrorAlert"
 
 const initialValues = {
   email: "",

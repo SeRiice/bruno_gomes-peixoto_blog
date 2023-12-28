@@ -1,5 +1,5 @@
-import FieldForm from "@/components/ui/FieldForm"
-import SignForm from "@/components/ui/SignForm"
+import FieldForm from "@/components/ui/form/FieldForm"
+import SignForm from "@/components/ui/form/SignForm"
 import { object } from "yup"
 import {
   confirmPasswordValidator,
@@ -10,7 +10,7 @@ import {
 } from "@/utils/validators"
 import { useMutation } from "@tanstack/react-query"
 import { createResource } from "@/web/services/api"
-import Alert from "@/components/ui/Alert"
+import Alert from "@/components/ui/alert/Alert"
 
 const initialValues = {
   firstName: "",
