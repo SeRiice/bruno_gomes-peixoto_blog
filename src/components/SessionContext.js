@@ -9,6 +9,7 @@ import {
 import jwt from "jsonwebtoken"
 import config from "@/web/config"
 import tokenExpired from "@/utils/tokenExpired"
+import { deleteResource } from "@/web/services/api"
 
 const SessionContext = createContext(null)
 
@@ -20,6 +21,12 @@ export const SessionContextProvider = (props) => {
     const { payload } = jwt.decode(token)
     setSession(payload)
     router.push("/")
+  }, [])
+  const signOut = useCallback(async () => {
+    await deleteResource("sessions")
+    localStorage.removeItem(config.security.session.key)
+    setSession(null)
+    router.push("/sign-in")
   }, [])
 
   useEffect(() => {
@@ -38,7 +45,9 @@ export const SessionContextProvider = (props) => {
     setSession(payload)
   }, [])
 
-  return <SessionContext.Provider value={{ session, signIn }} {...props} />
+  return (
+    <SessionContext.Provider value={{ session, signIn, signOut }} {...props} />
+  )
 }
 
 export const useSession = () => useContext(SessionContext)

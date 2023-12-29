@@ -14,6 +14,7 @@ import jwt from "jsonwebtoken"
 import config from "@/api/config"
 import webConfig from "@/web/config"
 import setCookie from "@/api/utils/setCookie"
+import auth from "@/api/middlewares/auth"
 
 const handlers = mw({
   POST: [
@@ -73,6 +74,17 @@ const handlers = mw({
       )
 
       res.send({ token })
+    },
+  ],
+  DELETE: [
+    auth,
+    ({ res }) => {
+      res.setHeader(
+        "Set-Cookie",
+        setCookie(webConfig.security.session.key, "", { maxAge: 0 }),
+      )
+
+      res.send({ userDisconnected: true })
     },
   ],
 })

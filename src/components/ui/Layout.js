@@ -1,10 +1,14 @@
-import Link from "@/components/ui/Link"
+import { useSession } from "@/components/SessionContext"
+import Link from "@/components/ui/link/Link"
+import NavBarNoSession from "@/components/ui/nav/NavBarNoSession"
+import NavBarSession from "@/components/ui/nav/NavBarSession"
 import clsx from "clsx"
 import { useRouter } from "next/router"
 
 const Layout = (props) => {
   const { children, className, ...otherProps } = props
   const router = useRouter()
+  const { session } = useSession()
 
   return (
     <div
@@ -19,24 +23,11 @@ const Layout = (props) => {
           <Link href={"/"} variant="logo">
             bloggy
           </Link>
-          <nav>
-            <ul className="flex gap-4">
-              <li>
-                <Link href={"/sign-in"} variant="fill">
-                  {"Se connecter"}
-                </Link>
-              </li>
-              <li>
-                <Link href={"/sign-up"} variant="primary">
-                  {"S'inscrire"}
-                </Link>
-              </li>
-            </ul>
-          </nav>
+          {session ? <NavBarSession /> : <NavBarNoSession />}
         </div>
       </div>
       <main
-        className={clsx("flex w-full max-w-3xl px-4 my-8", {
+        className={clsx("flex w-full max-w-3xl px-3 my-4", {
           grow:
             router.pathname === "/sign-in" || router.pathname === "/sign-up",
         })}
