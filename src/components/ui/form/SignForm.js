@@ -1,4 +1,4 @@
-import Link from "@/components/ui/Link"
+import Link from "@/components/ui/link/Link"
 import SubmitButton from "@/components/ui/button/SubmitButton"
 import clsx from "clsx"
 import { Form, Formik } from "formik"
