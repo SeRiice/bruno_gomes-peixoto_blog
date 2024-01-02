@@ -13,8 +13,13 @@ const NavBarSession = () => {
 
   return (
     <NavBar>
-      <IconLink href="/" Icon={RectangleStackIcon} text="Accueil" />
-      <IconLink href={`/users/${id}`} Icon={UserCircleIcon} text="Profil" />
+      <IconLink checkPath href="/" Icon={RectangleStackIcon} text="Accueil" />
+      <IconLink
+        checkPath
+        href={`/users/${id}`}
+        Icon={UserCircleIcon}
+        text="Profil"
+      />
       <SignOutButton />
     </NavBar>
   )
