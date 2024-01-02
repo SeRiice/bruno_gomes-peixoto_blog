@@ -44,3 +44,7 @@ export const jwtExpiresInValidator = string().oneOf([
 export const sessionKeyValidator = string()
 
 export const sessionSecureValidator = boolean()
+
+export const paginationLimitValidator = number().min(1).default(10)
+
+export const pageValidator = number().min(1).default(1)

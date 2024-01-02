@@ -3,6 +3,7 @@ import {
   isDevModeValidator,
   jwtExpiresInValidator,
   jwtSecretValidator,
+  paginationLimitValidator,
   passwordIterationsValidator,
   passwordKeylenValidator,
 } from "@/utils/validators"
@@ -25,6 +26,9 @@ const validationSchema = object({
       expiresIn: jwtExpiresInValidator.required(),
     }).noUnknown(),
   }).noUnknown(),
+  pagination: object({
+    limit: paginationLimitValidator.required(),
+  }),
 })
 
 try {
