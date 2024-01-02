@@ -24,7 +24,7 @@ const PostCard = (props) => {
   return (
     <article
       onClick={handleClick}
-      data-route={`posts/${post.id}`}
+      data-route={`/posts/${post.id}`}
       className={clsx(
         "flex flex-col shadow-md shadow-neutral-200 gap-4 border border-neutral-300 rounded-lg p-4",
         !disabled &&
@@ -35,7 +35,7 @@ const PostCard = (props) => {
     >
       <div className="flex justify-between items-center">
         <Link
-          href={`users/${user.id}`}
+          href={`/users/${user.id}`}
           onClick={handleLinkPropagation}
           variant="primary"
         >
