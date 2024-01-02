@@ -16,11 +16,21 @@ const variants = {
   },
 }
 const Alert = (props) => {
-  const { children, variant = "info", className, ...otherProps } = props
+  const {
+    children,
+    stayVisible,
+    variant = "info",
+    className,
+    ...otherProps
+  } = props
   const [displayAlert, setDisplayAlert] = useState(true)
   const Icon = variants[variant].icon
 
   useEffect(() => {
+    if (stayVisible) {
+      return () => null
+    }
+
     const timeoutId = setTimeout(() => setDisplayAlert(false), 2500)
 
     return () => clearTimeout(timeoutId)
