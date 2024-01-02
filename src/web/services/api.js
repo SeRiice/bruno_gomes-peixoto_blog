@@ -12,7 +12,7 @@ const parseUrl = (resource) => {
 }
 const makeResource =
   (method) =>
-  (resource, data = {}, options = {}) => {
+  (resource, { data = {}, options = {} } = {}) => {
     const token = localStorage.getItem(config.security.session.key)
     const headers = token ? { Authorization: token } : {}
 

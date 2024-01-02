@@ -18,7 +18,7 @@ const validationSchema = object({
 const SignIn = () => {
   const { signIn } = useSession()
   const { mutateAsync, isPending, isError, error } = useMutation({
-    mutationFn: (values) => createResource("sessions", values),
+    mutationFn: (values) => createResource("sessions", { data: values }),
   })
   const handleSubmit = async (values, { resetForm }) => {
     try {

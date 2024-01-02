@@ -30,7 +30,7 @@ const validationSchema = object({
 })
 const SignUp = () => {
   const { mutateAsync, isSuccess, isPending } = useMutation({
-    mutationFn: (values) => createResource("users", values),
+    mutationFn: (values) => createResource("users", { data: values }),
   })
   const handleSubmit = async (values, { resetForm }) => {
     await mutateAsync(values)
