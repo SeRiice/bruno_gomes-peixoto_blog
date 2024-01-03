@@ -22,11 +22,6 @@ const handlers = mw({
       } = config
       const { results, total } = await PostModel.query()
         .page(page - 1, limit)
-        .modifiers({
-          restrictSelection(builder) {
-            builder.select("id", "firstName", "lastName")
-          },
-        })
         .withGraphFetched("user(restrictSelection)")
         .orderBy("createdAt", "desc")
 
