@@ -48,3 +48,11 @@ export class HttpForbiddenError extends HttpPublicError {
     super(message)
   }
 }
+
+export class HttpNotFoundError extends HttpPublicError {
+  statusCode = HTTP_ERRORS.NOT_FOUND
+
+  constructor(message = "Resource not found.") {
+    super(message)
+  }
+}

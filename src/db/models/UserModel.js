@@ -4,6 +4,12 @@ import RoleModel from "@/db/models/RoleModel"
 class UserModel extends BasicModel {
   static tableName = "users"
 
+  static modifiers = {
+    restrictSelection(query) {
+      query.select("id", "firstName", "lastName")
+    },
+  }
+
   static get relationMappings() {
     return {
       role: {

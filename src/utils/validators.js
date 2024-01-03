@@ -48,3 +48,5 @@ export const sessionSecureValidator = boolean()
 export const paginationLimitValidator = number().min(1).default(10)
 
 export const pageValidator = number().min(1).default(1)
+
+export const idValidator = number().min(1)

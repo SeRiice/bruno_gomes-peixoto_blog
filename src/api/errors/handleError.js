@@ -1,15 +1,21 @@
 import { HTTP_ERRORS } from "@/api/errors/constants"
 import {
   HttpForbiddenError,
+  HttpNotFoundError,
   HttpPublicError,
   PublicError,
 } from "@/api/errors/errors"
 import { JsonWebTokenError } from "jsonwebtoken"
+import { NotFoundError } from "objection"
 
 const handleError = (err, { res }) => {
   const error = (() => {
     if (err instanceof JsonWebTokenError) {
       return new HttpForbiddenError()
+    }
+
+    if (err instanceof NotFoundError) {
+      return new HttpNotFoundError()
     }
 
     return err

@@ -5,4 +5,5 @@ export const HTTP_ERRORS = {
   UNAUTHORIZED: 401,
   LOCKED: 423,
   FORBIDDEN: 403,
+  NOT_FOUND: 404,
 }
