@@ -6,6 +6,7 @@ import { useMutation } from "@tanstack/react-query"
 import { createResource } from "@/web/services/api"
 import { useSession } from "@/components/SessionContext"
 import ErrorAlert from "@/components/ui/alert/ErrorAlert"
+import { Formik } from "formik"
 
 const initialValues = {
   email: "",
@@ -37,21 +38,24 @@ const SignIn = () => {
   return (
     <div className="flex flex-col gap-8 w-full items-center justify-center">
       <ErrorAlert isError={isError} statusCode={error?.response.status} />
-      <SignForm
+      <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
-        formTitle="Saisissez vos identifiants"
-        buttonText={isPending ? "ENVOI DES DONNÉES..." : "SE CONNECTER"}
-        linkInfo={{
-          text: "Toujours pas de compte ?",
-          href: "/sign-up",
-          hrefText: "Inscrivez-vous",
-        }}
       >
-        <FieldForm label="E-MAIL" name="email" type="email" />
-        <FieldForm label="MOT DE PASSE" name="password" type="password" />
-      </SignForm>
+        <SignForm
+          formTitle="Saisissez vos identifiants"
+          buttonText={isPending ? "ENVOI DES DONNÉES..." : "SE CONNECTER"}
+          linkInfo={{
+            text: "Toujours pas de compte ?",
+            href: "/sign-up",
+            hrefText: "Inscrivez-vous",
+          }}
+        >
+          <FieldForm label="E-MAIL" name="email" type="email" />
+          <FieldForm label="MOT DE PASSE" name="password" type="password" />
+        </SignForm>
+      </Formik>
     </div>
   )
 }

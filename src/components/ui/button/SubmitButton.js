@@ -8,6 +8,7 @@ const SubmitButton = (props) => {
 
   return (
     <Button
+      type="submit"
       disabled={isDisabled}
       variant={!isDisabled ? "fill" : "disabled"}
       {...otherProps}

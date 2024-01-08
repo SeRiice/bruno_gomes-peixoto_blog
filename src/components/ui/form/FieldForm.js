@@ -2,13 +2,13 @@ import clsx from "clsx"
 import { Field, useField } from "formik"
 
 const FieldForm = (props) => {
-  const { name, label, className, ...otherProps } = props
+  const { name, label, className, noErrorMessage, ...otherProps } = props
   const [field, { error, touched }] = useField(name)
-  const hasError = touched && error
+  const hasError = !noErrorMessage && touched && error
 
   return (
     <div className="flex flex-col gap-1">
-      <label className=" font-medium">{label}</label>
+      {label && <label className=" font-medium">{label}</label>}
       <Field
         name={name}
         className={clsx(
