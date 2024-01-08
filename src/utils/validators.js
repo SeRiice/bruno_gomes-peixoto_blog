@@ -1,4 +1,4 @@
-import { string, ref, object, boolean, number } from "yup"
+import { string, ref, object, boolean, number, date } from "yup"
 
 export const firstNameValidator = string().min(2)
 
@@ -50,3 +50,7 @@ export const paginationLimitValidator = number().min(1).default(10)
 export const pageValidator = number().min(1).default(1)
 
 export const idValidator = number().min(1)
+
+export const contentValidator = string().min(1)
+
+export const dateValidator = date().default(() => new Date())
