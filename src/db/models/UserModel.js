@@ -6,7 +6,7 @@ class UserModel extends BasicModel {
 
   static modifiers = {
     restrictSelection(query) {
-      query.select("id", "firstName", "lastName")
+      query.select("id", "firstName", "lastName", "createdAt", "updatedAt")
     },
   }
 
