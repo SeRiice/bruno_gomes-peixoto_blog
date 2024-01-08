@@ -1,9 +1,14 @@
-import Loading from "@/components/ui/Loading"
-import PostCard from "@/components/ui/PostCard"
-import ErrorAlert from "@/components/ui/alert/ErrorAlert"
+import ManageQueryStatus from "@/components/ManageQueryStatus"
+import RetrieveComments from "@/components/RetrieveComments"
+import { useSession } from "@/components/SessionContext"
+import CommentCard from "@/components/ui/card/CommentCard"
+import PostCard from "@/components/ui/card/PostCard"
+import CommentForm from "@/components/ui/form/CommentForm"
+import Link from "@/components/ui/link/Link"
 import { idValidator } from "@/utils/validators"
 import { readResource } from "@/web/services/api"
 import { useQuery } from "@tanstack/react-query"
+import { useState } from "react"
 
 export const getServerSideProps = ({ query: { postId } }) => ({
   props: {
@@ -12,37 +17,50 @@ export const getServerSideProps = ({ query: { postId } }) => ({
 })
 const Post = (props) => {
   const { postId } = props
+  const { session } = useSession()
+  const [newComments, setNewComments] = useState([])
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["posts", postId],
     queryFn: () => readResource(["posts", postId]),
   })
 
-  if (isLoading) {
-    return <Loading />
-  }
-
-  if (isError) {
+  if (isLoading || isError) {
     return (
-      <ErrorAlert
+      <ManageQueryStatus
+        isLoading={isLoading}
         isError={isError}
-        statusCode={error?.response.status}
-        className="mx-auto"
-        stayVisible
+        error={error}
       />
     )
   }
 
-  const {
-    data: { result },
-  } = data
+  const result = data?.data.result || []
 
   return (
-    <div className="flex flex-col w-full gap-4 mb-4">
-      {result.map((post) => {
-        const { id } = post
+    <div className="flex flex-col w-full gap-8 mb-4">
+      {result.map((post) => (
+        <PostCard post={post} key={post.id} disabled />
+      ))}
 
-        return <PostCard post={post} key={id} disabled />
-      })}
+      {session ? (
+        <CommentForm postId={postId} setNewComments={setNewComments} />
+      ) : (
+        <p className="text-center">
+          {"Tu souhaites ajouter un commentaire ? "}
+          <span>
+            <Link href="/sign-in" variant="primary">
+              Connecte-toi
+            </Link>
+          </span>
+        </p>
+      )}
+
+      <div className="flex flex-col gap-4">
+        {newComments.map((comment) => (
+          <CommentCard comment={comment} key={comment.id} />
+        ))}
+        <RetrieveComments postId={postId} addCommentForm={session} />
+      </div>
     </div>
   )
 }
