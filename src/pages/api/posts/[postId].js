@@ -1,3 +1,4 @@
+import addNewVisit from "@/api/middlewares/addNewVisit"
 import validate from "@/api/middlewares/validate"
 import mw from "@/api/mw"
 import { idValidator } from "@/utils/validators"
@@ -13,6 +14,7 @@ const handlers = mw({
       input: {
         query: { postId },
       },
+      next,
     }) => {
       const post = await PostModel.query()
         .findById(postId)
@@ -20,7 +22,10 @@ const handlers = mw({
         .throwIfNotFound()
 
       send(post)
+
+      await next()
     },
+    addNewVisit,
   ],
 })
 

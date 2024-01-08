@@ -7,7 +7,7 @@ import { ArrowDownCircleIcon } from "@heroicons/react/16/solid"
 import { useInfiniteQuery } from "@tanstack/react-query"
 
 const RetrieveComments = (props) => {
-  const { postId, userId } = props
+  const { postId, userId, newComments = [] } = props
   const { data, fetchNextPage, hasNextPage, isLoading, isError, error } =
     useInfiniteQuery({
       queryKey: ["comments", postId],
@@ -27,12 +27,18 @@ const RetrieveComments = (props) => {
   const handleClick = () => fetchNextPage()
   const comments = data?.pages.flatMap((page) => page.data.result) || []
 
-  if (isLoading || isError) {
+  if (
+    isLoading ||
+    isError ||
+    (comments.length === 0 && newComments.length === 0)
+  ) {
     return (
       <ManageQueryStatus
         isLoading={isLoading}
         isError={isError}
         error={error}
+        resource={comments}
+        alertMessage="Aucun commentaire"
       />
     )
   }

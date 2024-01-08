@@ -2,7 +2,13 @@ import Alert from "@/components/ui/alert/Alert"
 import ErrorAlert from "@/components/ui/alert/ErrorAlert"
 
 const ManageQueryStatus = (props) => {
-  const { isLoading, isError, error, resource } = props
+  const {
+    isLoading,
+    isError,
+    error,
+    resource,
+    alertMessage = "Aucun résultat",
+  } = props
   const isResourceEmpty =
     !isLoading && !isError && resource && resource.length === 0
 
@@ -18,9 +24,7 @@ const ManageQueryStatus = (props) => {
           stayVisible
         />
       )}
-      {isResourceEmpty && (
-        <Alert stayVisible>La ressource demandée est inexistante</Alert>
-      )}
+      {isResourceEmpty && <Alert stayVisible>{alertMessage}</Alert>}
     </div>
   )
 }

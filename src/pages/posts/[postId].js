@@ -22,6 +22,7 @@ const Post = (props) => {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["posts", postId],
     queryFn: () => readResource(["posts", postId]),
+    refetchOnWindowFocus: false,
   })
 
   if (isLoading || isError) {
@@ -59,7 +60,7 @@ const Post = (props) => {
         {newComments.map((comment) => (
           <CommentCard comment={comment} key={comment.id} />
         ))}
-        <RetrieveComments postId={postId} addCommentForm={session} />
+        <RetrieveComments postId={postId} newComments={newComments} />
       </div>
     </div>
   )
