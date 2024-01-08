@@ -22,9 +22,8 @@ const PaginationItem = (props) => {
   )
 }
 const Pagination = (props) => {
-  const { pathname, page, pages, className } = props
-  const previousPage = page - 1 < 1 ? page : page - 1
-  const nextPage = page + 1 > pages ? page : page + 1
+  const { pathname, meta, className } = props
+  const { page, maxPages, nextPage, previousPage } = meta
 
   return (
     <NavBar variant="center" className={className}>
@@ -44,21 +43,21 @@ const Pagination = (props) => {
           limit={1}
         />
       </div>
-      <span className="font-medium">{`Page ${page} / ${pages}`}</span>
+      <span className="font-medium">{`Page ${page} / ${maxPages}`}</span>
       <div className="flex gap-1">
         <PaginationItem
           pathname={pathname}
           pageParam={nextPage}
           Icon={ChevronRightIcon}
           page={page}
-          limit={pages}
+          limit={maxPages}
         />
         <PaginationItem
           pathname={pathname}
-          pageParam={pages}
+          pageParam={maxPages}
           Icon={ChevronDoubleRightIcon}
           page={page}
-          limit={pages}
+          limit={maxPages}
         />
       </div>
     </NavBar>
