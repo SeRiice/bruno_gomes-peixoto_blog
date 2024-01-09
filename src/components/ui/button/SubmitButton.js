@@ -3,8 +3,8 @@ import { useFormikContext } from "formik"
 
 const SubmitButton = (props) => {
   const { disabled, ...otherProps } = props
-  const { isValid } = useFormikContext()
-  const isDisabled = disabled || !isValid
+  const { isValid, isSubmitting } = useFormikContext()
+  const isDisabled = disabled || !isValid || isSubmitting
 
   return (
     <Button
