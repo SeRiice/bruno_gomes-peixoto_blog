@@ -1,9 +1,13 @@
 const addNewVisit = async ({
   models: { PostModel },
   input: {
-    query: { postId },
+    query: { postId, edit },
   },
 }) => {
+  if (edit) {
+    return
+  }
+
   await PostModel.query().findById(postId).increment("visits", 1)
 }
 
