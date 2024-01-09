@@ -54,3 +54,5 @@ export const idValidator = number().min(1)
 export const contentValidator = string().min(1)
 
 export const dateValidator = date().default(() => new Date())
+
+export const titleValidator = string().min(1)
