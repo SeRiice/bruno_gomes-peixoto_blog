@@ -16,6 +16,7 @@ const SessionContext = createContext(null)
 export const SessionContextProvider = (props) => {
   const router = useRouter()
   const [session, setSession] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
   const signIn = useCallback((token) => {
     localStorage.setItem(config.security.session.key, token)
     const { payload } = jwt.decode(token)
@@ -30,6 +31,8 @@ export const SessionContextProvider = (props) => {
   }, [])
 
   useEffect(() => {
+    setIsLoading(false)
+
     const token = localStorage.getItem(config.security.session.key)
 
     if (!token) {
@@ -46,7 +49,10 @@ export const SessionContextProvider = (props) => {
   }, [])
 
   return (
-    <SessionContext.Provider value={{ session, signIn, signOut }} {...props} />
+    <SessionContext.Provider
+      value={{ session, isLoading, signIn, signOut }}
+      {...props}
+    />
   )
 }
 
