@@ -10,7 +10,7 @@ const RetrieveComments = (props) => {
   const { postId, userId, newComments = [] } = props
   const { data, fetchNextPage, hasNextPage, isLoading, isError, error } =
     useInfiniteQuery({
-      queryKey: ["comments", postId],
+      queryKey: ["comments", postId, userId],
       queryFn: ({ pageParam }) =>
         readResource("comments", {
           options: {

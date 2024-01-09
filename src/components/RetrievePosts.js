@@ -7,7 +7,7 @@ import { useQuery } from "@tanstack/react-query"
 const RetrievePosts = (props) => {
   const { page, userId, addPagination } = props
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["posts", page],
+    queryKey: ["posts", page, userId],
     queryFn: () =>
       readResource("posts", { options: { params: { page, userId } } }),
   })
