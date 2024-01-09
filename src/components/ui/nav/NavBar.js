@@ -11,9 +11,7 @@ const NavBar = (props) => {
   return (
     <nav {...otherProps}>
       <ul className={clsx("flex gap-3", variants[variant], className)}>
-        {Children.map(children, (child) => (
-          <li>{child}</li>
-        ))}
+        {Children.map(children, (child) => child && <li>{child}</li>)}
       </ul>
     </nav>
   )
