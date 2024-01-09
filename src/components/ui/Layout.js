@@ -5,6 +5,7 @@ import NavBarSession from "@/components/ui/nav/NavBarSession"
 import clsx from "clsx"
 import { useRouter } from "next/router"
 
+const pathnameToGrow = ["/sign-in", "sign-up", "/createPost"]
 const Layout = (props) => {
   const { children, className, ...otherProps } = props
   const router = useRouter()
@@ -18,7 +19,7 @@ const Layout = (props) => {
       )}
       {...otherProps}
     >
-      <div className="w-full shadow sticky top-0 bg-neutral-50 ">
+      <div className="w-full shadow sticky top-0 bg-neutral-50">
         <div className="flex mx-auto p-3 justify-between items-center max-w-3xl">
           <Link href={"/"} variant="logo">
             bloggy
@@ -28,8 +29,7 @@ const Layout = (props) => {
       </div>
       <main
         className={clsx("flex w-full max-w-3xl px-3 my-4", {
-          grow:
-            router.pathname === "/sign-in" || router.pathname === "/sign-up",
+          grow: pathnameToGrow.includes(router.pathname),
         })}
       >
         {children}
