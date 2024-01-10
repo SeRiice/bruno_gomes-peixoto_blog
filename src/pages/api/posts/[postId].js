@@ -55,13 +55,13 @@ const handlers = mw({
         body: { title, content },
       },
     }) => {
+      const post = await PostModel.query().findById(postId).throwIfNotFound()
       const { authorization } = req.headers
       const {
         payload: {
           user: { id: userId },
         },
       } = jwt.decode(authorization)
-      const post = await PostModel.query().findById(postId).throwIfNotFound()
 
       if (post.userId !== userId) {
         throw new HttpForbiddenError()
