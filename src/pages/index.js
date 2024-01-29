@@ -9,7 +9,7 @@ export const getServerSideProps = ({ query: { page } }) => ({
 const Home = (props) => {
   const { page } = props
 
-  return <RetrievePosts page={page} addPagination={{ pathname: "/" }} />
+  return <RetrievePosts page={page} pathname="/" />
 }
 
 export default Home
