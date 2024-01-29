@@ -1,3 +1,6 @@
+import config from "@/api/config"
+import adminPrivileges from "@/api/middlewares/adminPrivileges"
+import auth from "@/api/middlewares/auth"
 import validate from "@/api/middlewares/validate"
 import mw from "@/api/mw"
 import {
@@ -12,6 +15,7 @@ import {
   emailValidator,
   firstNameValidator,
   lastNameValidator,
+  pageValidator,
   passwordValidator,
 } from "@/utils/validators"
 
@@ -61,6 +65,41 @@ const handlers = mw({
       })
 
       res.send({ userCreated: true })
+    },
+  ],
+  GET: [
+    auth,
+    adminPrivileges,
+    validate({
+      query: {
+        page: pageValidator.required(),
+      },
+    }),
+    async ({
+      send,
+      models: { UserModel },
+      input: {
+        query: { page },
+      },
+    }) => {
+      const {
+        pagination: { limit },
+      } = config
+      const { results, total } = await UserModel.query()
+        .page(page - 1, limit)
+        .modify("restrictSelection")
+        .withGraphFetched("role")
+        .orderBy("createdAt", "desc")
+      const maxPages = Math.ceil(total / limit)
+      const nextPage = page + 1 > maxPages ? null : page + 1
+      const previousPage = page - 1 < 1 ? null : page - 1
+
+      send(results, {
+        maxPages,
+        nextPage,
+        previousPage,
+        page,
+      })
     },
   ],
 })
