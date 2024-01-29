@@ -5,7 +5,12 @@ import NavBarSession from "@/components/ui/nav/NavBarSession"
 import clsx from "clsx"
 import { useRouter } from "next/router"
 
-const pathnameToGrow = ["/sign-in", "sign-up", "/createPost"]
+const pathnameToGrow = [
+  "/sign-in",
+  "/sign-up",
+  "/createPost",
+  "/posts/[postId]/edit",
+]
 const Layout = (props) => {
   const { children, className, ...otherProps } = props
   const router = useRouter()
