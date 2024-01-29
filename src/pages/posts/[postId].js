@@ -5,9 +5,8 @@ import CommentCard from "@/components/ui/card/CommentCard"
 import PostCard from "@/components/ui/card/PostCard"
 import CommentForm from "@/components/ui/form/CommentForm"
 import Link from "@/components/ui/link/Link"
+import usePost from "@/hooks/usePost"
 import { idValidator } from "@/utils/validators"
-import { readResource } from "@/web/services/api"
-import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
 
 export const getServerSideProps = ({ query: { postId } }) => ({
@@ -19,11 +18,7 @@ const Post = (props) => {
   const { postId } = props
   const { session } = useSession()
   const [newComments, setNewComments] = useState([])
-  const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["posts", postId],
-    queryFn: () => readResource(["posts", postId]),
-    refetchOnWindowFocus: false,
-  })
+  const { post, isLoading, isError, error } = usePost(postId)
 
   if (isLoading || isError) {
     return (
@@ -35,14 +30,13 @@ const Post = (props) => {
     )
   }
 
-  const result = data?.data.result || []
-
   return (
-    <div className="flex flex-col w-full gap-8 mb-4">
-      {result.map((post) => (
-        <PostCard post={post} key={post.id} disabled />
-      ))}
-
+    <div className="flex flex-col w-full gap-8">
+      <PostCard
+        post={post}
+        disabled
+        edit={session && session.user.id === post.userId}
+      />
       {session ? (
         <CommentForm postId={postId} setNewComments={setNewComments} />
       ) : (
@@ -55,10 +49,9 @@ const Post = (props) => {
           </span>
         </p>
       )}
-
       <div className="flex flex-col gap-4">
         {newComments.map((comment) => (
-          <CommentCard comment={comment} key={comment.id} />
+          <CommentCard key={comment.id} comment={comment} />
         ))}
         <RetrieveComments postId={postId} newComments={newComments} />
       </div>
