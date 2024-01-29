@@ -1,14 +1,16 @@
+import StatsBar from "@/components/ui/StatsBar"
+import Card, {
+  CardBody,
+  CardFooter,
+  CardHeader,
+} from "@/components/ui/card/Card"
+import IconLink from "@/components/ui/link/IconLink"
 import Link from "@/components/ui/link/Link"
-import formatDate from "@/utils/formatDate"
-import clsx from "clsx"
+import { PencilIcon } from "@heroicons/react/16/solid"
 import { useRouter } from "next/router"
 
-const variants = {
-  none: "",
-  truncate: "line-clamp-3",
-}
 const PostCard = (props) => {
-  const { post, variant = "none", disabled, className, ...otherProps } = props
+  const { post, disabled, truncate, edit, className } = props
   const { user } = post
   const router = useRouter()
   const handleClick = (event) => {
@@ -22,18 +24,13 @@ const PostCard = (props) => {
   const handleLinkPropagation = (event) => event.stopPropagation()
 
   return (
-    <article
+    <Card
       onClick={handleClick}
       data-route={`/posts/${post.id}`}
-      className={clsx(
-        "flex flex-col shadow-md shadow-neutral-200 gap-4 border border-neutral-300 rounded-lg p-4",
-        !disabled &&
-          "hover:bg-indigo-50/30 hover:border-indigo-400 hover:cursor-pointer ease-out duration-200",
-        className,
-      )}
-      {...otherProps}
+      disabled={disabled}
+      className={className}
     >
-      <div className="flex justify-between items-center">
+      <CardHeader date={post.createdAt}>
         <Link
           href={`/users/${user.id}`}
           onClick={handleLinkPropagation}
@@ -41,13 +38,19 @@ const PostCard = (props) => {
         >
           {`${user.firstName} ${user.lastName}`}
         </Link>
-        <span>{formatDate(post.createdAt)}</span>
-      </div>
-      <h2 className="text-base font-medium">{post.title}</h2>
-      <p className={clsx("whitespace-pre-wrap break-words", variants[variant])}>
-        {post.content}
-      </p>
-    </article>
+      </CardHeader>
+      <CardBody title={post.title} content={post.content} truncate={truncate} />
+      <CardFooter>
+        <StatsBar totalVisits={String(post.visits)} />
+        {edit && (
+          <IconLink
+            href={`/posts/${post.id}/edit`}
+            onClick={handleLinkPropagation}
+            Icon={PencilIcon}
+          />
+        )}
+      </CardFooter>
+    </Card>
   )
 }
 
