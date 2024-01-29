@@ -70,6 +70,7 @@ const handlers = mw({
       const patchedPost = await PostModel.query().patchAndFetchById(postId, {
         title,
         content,
+        updatedAt: new Date().toISOString(),
       })
 
       send(patchedPost)
