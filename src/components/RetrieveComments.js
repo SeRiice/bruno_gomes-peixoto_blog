@@ -1,31 +1,14 @@
 import ManageQueryStatus from "@/components/ManageQueryStatus"
 import Button from "@/components/ui/button/Button"
 import CommentCard from "@/components/ui/card/CommentCard"
-import { dateValidator } from "@/utils/validators"
-import { readResource } from "@/web/services/api"
+import useComments from "@/hooks/useComments"
 import { ArrowDownCircleIcon } from "@heroicons/react/16/solid"
-import { useInfiniteQuery } from "@tanstack/react-query"
 
 const RetrieveComments = (props) => {
   const { postId, userId, newComments = [] } = props
-  const { data, fetchNextPage, hasNextPage, isLoading, isError, error } =
-    useInfiniteQuery({
-      queryKey: ["comments", postId, userId],
-      queryFn: ({ pageParam }) =>
-        readResource("comments", {
-          options: {
-            params: {
-              lastCreatedAt: pageParam,
-              postId,
-              userId,
-            },
-          },
-        }),
-      initialPageParam: dateValidator.validateSync(),
-      getNextPageParam: (lastPage) => lastPage.data.meta.nextPage,
-    })
+  const { comments, fetchNextPage, hasNextPage, isLoading, isError, error } =
+    useComments(postId, userId)
   const handleClick = () => fetchNextPage()
-  const comments = data?.pages.flatMap((page) => page.data.result) || []
 
   if (
     isLoading ||
