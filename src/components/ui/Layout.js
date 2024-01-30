@@ -10,6 +10,7 @@ const pathnameToGrow = [
   "/sign-up",
   "/createPost",
   "/posts/[postId]/edit",
+  "/users/[userId]/edit",
 ]
 const Layout = (props) => {
   const { children, className, ...otherProps } = props
