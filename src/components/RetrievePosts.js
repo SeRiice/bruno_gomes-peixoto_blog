@@ -14,6 +14,7 @@ const RetrievePosts = (props) => {
         isError={isError}
         error={error}
         resource={posts}
+        alertMessage="Aucun post"
       />
     )
   }
