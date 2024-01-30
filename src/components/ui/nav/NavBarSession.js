@@ -5,6 +5,7 @@ import {
   RectangleStackIcon,
   UserCircleIcon,
   PlusCircleIcon,
+  WrenchIcon,
 } from "@heroicons/react/16/solid"
 import IconLink from "@/components/ui/link/IconLink"
 
@@ -19,6 +20,14 @@ const NavBarSession = () => {
   return (
     <NavBar>
       <IconLink checkPath href="/" Icon={RectangleStackIcon} text="Accueil" />
+      {name === "ADMIN" && (
+        <IconLink
+          checkPath
+          href="/admin"
+          Icon={WrenchIcon}
+          text="Administration"
+        />
+      )}
       {name !== "USER" && (
         <IconLink
           checkPath
