@@ -60,3 +60,7 @@ export const titleValidator = string().min(1)
 export const editValidator = boolean().default(false)
 
 export const disabledValidator = boolean()
+
+export const tabValidator = string()
+  .oneOf(["posts", "comments"])
+  .default("posts")
