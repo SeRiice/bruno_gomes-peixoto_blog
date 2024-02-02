@@ -1,4 +1,3 @@
-/* eslint-disable max-lines-per-function */
 import ManageQueryStatus from "@/components/ManageQueryStatus"
 import RetrieveComments from "@/components/RetrieveComments"
 import RetrievePosts from "@/components/RetrievePosts"
