@@ -2,7 +2,7 @@ import FieldForm from "@/components/ui/form/FieldForm"
 import PostForm from "@/components/ui/form/post/PostForm"
 import { contentValidator, titleValidator } from "@/utils/validators"
 import { updateResource } from "@/web/services/api"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { Formik } from "formik"
 import { useRouter } from "next/router"
 import { object } from "yup"
@@ -14,15 +14,19 @@ const validationSchema = object({
 const EditPostForm = (props) => {
   const { post } = props
   const router = useRouter()
+  const queryClient = useQueryClient()
   const { mutateAsync, isPending } = useMutation({
     mutationFn: (values) =>
       updateResource(["posts", post.id], { data: values }),
+    onSuccess: () =>
+      queryClient.invalidateQueries({
+        queryKey: ["posts", post.id],
+        exact: true,
+      }),
   })
   const handleSubmit = async (values) => {
     try {
       await mutateAsync(values)
-    } catch (err) {
-      return
     } finally {
       router.back()
     }
