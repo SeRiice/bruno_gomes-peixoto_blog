@@ -30,8 +30,6 @@ const CommentForm = (props) => {
       } = await mutateAsync(values)
 
       setNewComments((prev) => [comment, ...prev])
-    } catch (err) {
-      return
     } finally {
       resetForm()
       validateForm(initialValues)
