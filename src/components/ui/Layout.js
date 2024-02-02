@@ -11,6 +11,7 @@ const pathnameToGrow = [
   "/createPost",
   "/posts/[postId]/edit",
   "/users/[userId]/edit",
+  "/admin",
 ]
 const Layout = (props) => {
   const { children, className, ...otherProps } = props
