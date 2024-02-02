@@ -11,13 +11,12 @@ const CheckIfUserIsAllowedToEditProfile = (props) => {
   const router = useRouter()
   const [isAllowed, setIsAllowed] = useState(false)
   const { user, isLoading, isError, error } = useUser(userId)
+  const isAdmin = session?.role.name === "ADMIN"
 
   useEffect(() => {
     if (isLoadingSession || isLoading || isError) {
       return
     }
-
-    const isAdmin = session?.role.name === "ADMIN"
 
     if (!session || (session?.user.id !== user.id && !isAdmin)) {
       router.push("/")
@@ -29,7 +28,7 @@ const CheckIfUserIsAllowedToEditProfile = (props) => {
   }, [isLoadingSession, isLoading])
 
   return isAllowed ? (
-    <EditUserForm user={user} />
+    <EditUserForm user={user} isAdmin={isAdmin} />
   ) : (
     <ManageQueryStatus isLoading={isLoading} isError={isError} error={error} />
   )
