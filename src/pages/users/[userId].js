@@ -4,17 +4,23 @@ import RetrievePosts from "@/components/RetrievePosts"
 import { useSession } from "@/components/SessionContext"
 import UserCard from "@/components/ui/card/UserCard"
 import useUser from "@/hooks/useUser"
-import { idValidator, pageValidator, tabValidator } from "@/utils/validators"
+import {
+  dateValidator,
+  idValidator,
+  pageValidator,
+  tabValidator,
+} from "@/utils/validators"
 
 export const getServerSideProps = ({ query: { userId, page, tab } }) => ({
   props: {
     userId: idValidator.required().validateSync(userId),
     page: pageValidator.required().validateSync(page),
     tab: tabValidator.required().validateSync(tab),
+    date: dateValidator.validateSync().toISOString(),
   },
 })
 const User = (props) => {
-  const { userId, page, tab } = props
+  const { userId, page, tab, date } = props
   const { session } = useSession()
   const { user, meta, isLoading, isError, error } = useUser(userId)
 
@@ -48,7 +54,7 @@ const User = (props) => {
 
       {tab === "comments" && (
         <div className="flex flex-col gap-4">
-          <RetrieveComments userId={userId} />
+          <RetrieveComments date={date} userId={userId} />
         </div>
       )}
     </div>

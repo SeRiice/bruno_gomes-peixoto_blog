@@ -6,16 +6,17 @@ import PostCard from "@/components/ui/card/PostCard"
 import CommentForm from "@/components/ui/form/CommentForm"
 import Link from "@/components/ui/link/Link"
 import usePost from "@/hooks/usePost"
-import { idValidator } from "@/utils/validators"
+import { dateValidator, idValidator } from "@/utils/validators"
 import { useState } from "react"
 
 export const getServerSideProps = ({ query: { postId } }) => ({
   props: {
+    date: dateValidator.validateSync().toISOString(),
     postId: idValidator.required().validateSync(postId),
   },
 })
 const Post = (props) => {
-  const { postId } = props
+  const { date, postId } = props
   const { session } = useSession()
   const [newComments, setNewComments] = useState([])
   const { post, isLoading, isError, error } = usePost(postId)
@@ -53,7 +54,11 @@ const Post = (props) => {
         {newComments.map((comment) => (
           <CommentCard key={comment.id} comment={comment} />
         ))}
-        <RetrieveComments postId={postId} newComments={newComments} />
+        <RetrieveComments
+          date={date}
+          postId={postId}
+          newComments={newComments}
+        />
       </div>
     </div>
   )

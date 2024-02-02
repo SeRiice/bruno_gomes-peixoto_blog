@@ -1,10 +1,9 @@
-import { dateValidator } from "@/utils/validators"
 import { readResource } from "@/web/services/api"
 import { useInfiniteQuery } from "@tanstack/react-query"
 
-const useComments = (postId, userId) => {
+const useComments = (date, postId, userId) => {
   const query = useInfiniteQuery({
-    queryKey: ["comments", postId, userId],
+    queryKey: ["comments", date, postId, userId],
     queryFn: ({ pageParam }) =>
       readResource("comments", {
         options: {
@@ -15,7 +14,7 @@ const useComments = (postId, userId) => {
           },
         },
       }),
-    initialPageParam: dateValidator.validateSync(),
+    initialPageParam: date,
     getNextPageParam: (lastPage) => lastPage.data.meta.nextPage,
   })
   const comments = query.data?.pages.flatMap((page) => page.data.result) || []

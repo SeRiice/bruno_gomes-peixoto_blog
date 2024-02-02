@@ -5,9 +5,9 @@ import useComments from "@/hooks/useComments"
 import { ArrowDownCircleIcon } from "@heroicons/react/16/solid"
 
 const RetrieveComments = (props) => {
-  const { postId, userId, newComments = [] } = props
+  const { date, postId, userId, newComments = [] } = props
   const { comments, fetchNextPage, hasNextPage, isLoading, isError, error } =
-    useComments(postId, userId)
+    useComments(date, postId, userId)
   const handleClick = () => fetchNextPage()
 
   if (
